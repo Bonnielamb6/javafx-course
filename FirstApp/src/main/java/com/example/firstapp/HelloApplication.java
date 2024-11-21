@@ -1,6 +1,7 @@
 package com.example.firstapp;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -22,6 +23,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) {
+        Platform.setImplicitExit(false);
         System.out.println(Thread.currentThread().getName());
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
@@ -29,9 +31,9 @@ public class HelloApplication extends Application {
         root.setSpacing(20);
         Label text = new Label("");
         Button button = new Button("Click me!");
-        Button button1 = new Button("Block!");
+        Button button1 = new Button("Exit explicitly!");
         button1.setOnAction(actionEvent -> {
-            button.setDisable(!button.isDisable());
+            Platform.exit();
         });
         button.setOnAction(event -> {
             text.setText("welcome to javafx application!");
@@ -42,6 +44,13 @@ public class HelloApplication extends Application {
         stage.setTitle("First application");
         stage.show();
     }
+
+//    @Override
+//    public void stop() throws Exception {
+//        System.out.println(Thread.currentThread().getName());
+//        System.out.println("Closing the application");
+//
+//    }
 
     public static void main(String[] args) {
         launch();
